@@ -13,6 +13,8 @@ function App() {
 
   const Main = styled.main`
     flex: 1;
+    display: flex;
+    gap: 0.5rem;
   `;
 
   return (

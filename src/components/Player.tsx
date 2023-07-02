@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState, useEffect, ChangeEvent } from "react";
 import styled from "styled-components";
 import {
   BsFillPlayFill,
@@ -18,6 +18,7 @@ import {
   PiQueueBold,
 } from "react-icons/pi";
 import { BiVolumeFull, BiVolumeMute } from "react-icons/bi";
+import { songs } from "../data/data";
 
 const PlayerWrapper = styled.div`
   position: relative;
@@ -42,7 +43,10 @@ const AlbumCover = styled.div`
   width: 55px;
   height: 55px;
   border-radius: 4px;
-  background-color: #fff;
+  background-color: #b2b2b2;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
   &.clicked {
     position: absolute;
@@ -285,14 +289,86 @@ const SongVolumeBar = styled.input`
 `;
 
 function Player() {
-  const [isPlaying, setIsPlaying] = useState(false);
   const [clicked, setClicked] = useState(false);
+
+  const audio = useRef<null | HTMLAudioElement>(null);
+  const [currentSong, setCurrentSong] = useState(
+    songs[3]
+    // {title: "Title",
+    // artist: "Artist",
+    // path: "",
+    // cover: "",}
+  );
+  const [isPlaying, setIsPlaying] = useState(false);
   const [mute, setMute] = useState(false);
+  const [volume, setVolume] = useState(0.5);
+
+  const [elapsedTime, setElapsedTime] = useState(0);
+  const [remainingTime, setRemainingTime] = useState(0);
+
+  const formatTime = (time: number) => {
+    if (isNaN(time)) return "0:00";
+    const minutes = Math.floor(time / 60);
+    const seconds =
+      Math.floor(time % 60) < 10
+        ? `0${Math.floor(time % 60)}`
+        : Math.floor(time % 60);
+
+    return `${minutes}:${seconds}`;
+  };
+
+  useEffect(() => {
+    if (!audio.current) return;
+    audio.current.volume = volume;
+
+    if (mute) {
+      setVolume(0);
+    } else {
+      audio.current.volume = volume;
+    }
+
+    if (volume === 0 && !mute) {
+      setVolume(0.5);
+    }
+  }, [mute, volume]);
+
+  useEffect(() => {
+    if (isPlaying) {
+      setInterval(() => {
+        const duration = audio.current?.duration;
+        const elapsed = audio.current?.currentTime;
+
+        if (!duration || !elapsed) return;
+        setRemainingTime(duration);
+        setElapsedTime(elapsed);
+
+        if (elapsed === duration) {
+          setIsPlaying(false);
+        }
+      }, 100);
+    }
+  }, [isPlaying]);
+
+  const togglePlay = () => {
+    if (!audio.current) return;
+    if (isPlaying) {
+      audio.current.pause();
+    } else {
+      audio.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
 
   return (
     <PlayerWrapper>
+      <audio ref={audio} src={currentSong.path} />
       <SongInfo>
-        <AlbumCover className={clicked ? "clicked" : ""}>
+        <AlbumCover
+          className={clicked ? "clicked" : ""}
+          style={{
+            backgroundImage: `url(${currentSong.cover})`,
+          }}
+        >
           <AlbumCoverButton
             onClick={() => {
               setClicked(!clicked);
@@ -305,8 +381,8 @@ function Player() {
           </AlbumCoverButton>
         </AlbumCover>
         <SongDetails>
-          <SongTitle>Somebody That I Used To Know</SongTitle>
-          <SongArtist>Gotye, Kimbra</SongArtist>
+          <SongTitle>{currentSong.title}</SongTitle>
+          <SongArtist>{currentSong.artist}</SongArtist>
         </SongDetails>
         <SongButton>
           <BsHeart />
@@ -325,7 +401,7 @@ function Player() {
           </Button>
           <PlayButton
             onClick={() => {
-              setIsPlaying(!isPlaying);
+              togglePlay();
             }}
           >
             {isPlaying ? <BsPauseFill /> : <BsFillPlayFill />}
@@ -338,9 +414,18 @@ function Player() {
           </Button>
         </SongControls>
         <Timeline>
-          <SongCurrentTime>0:00</SongCurrentTime>
-          <ProgressBar type="range"></ProgressBar>
-          <SongDuration>3:00</SongDuration>
+          <SongCurrentTime>{formatTime(elapsedTime)}</SongCurrentTime>
+          <ProgressBar
+            type="range"
+            min="0"
+            max={remainingTime}
+            value={elapsedTime}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              if (!audio.current) return;
+              audio.current.currentTime = Number(e.target.value);
+            }}
+          ></ProgressBar>
+          <SongDuration>{formatTime(remainingTime)}</SongDuration>
         </Timeline>
       </SongPlayer>
       <SongTools>
@@ -355,11 +440,25 @@ function Player() {
         </SongButton>
         <SongVolume>
           {mute ? (
-            <BiVolumeFull onClick={() => setMute(!mute)} />
+            <BiVolumeMute
+              onClick={() => {
+                setMute(!mute);
+              }}
+            />
           ) : (
-            <BiVolumeMute onClick={() => setMute(!mute)} />
+            <BiVolumeFull onClick={() => setMute(!mute)} />
           )}
-          <SongVolumeBar type="range" />
+          <SongVolumeBar
+            type="range"
+            min="0"
+            max="100"
+            value={volume * 100}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              setVolume(parseInt(e.target.value) / 100);
+              if (parseInt(e.target.value) != 0) setMute(false);
+              else setMute(true);
+            }}
+          />
         </SongVolume>
         <SongButton>
           <PiArrowsOutSimpleBold />
