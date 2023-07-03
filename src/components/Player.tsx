@@ -184,6 +184,10 @@ const PlayButton = styled.button`
   align-items: center;
   justify-content: center;
 
+  &:hover {
+    transform: scale(1.05);
+  }
+
   &:active {
     transform: scale(0.9);
   }
@@ -204,11 +208,13 @@ const Timeline = styled.div`
 `;
 
 const SongCurrentTime = styled.p`
+  width: 2rem;
   font-size: 0.68rem;
 `;
 
 const ProgressBar = styled.input`
   -webkit-appearance: none;
+  appearance: none;
   width: 100%;
   height: 4px;
   background-color: #4d4d4d;
@@ -233,6 +239,7 @@ const ProgressBar = styled.input`
 `;
 
 const SongDuration = styled.p`
+  width: 2rem;
   font-size: 0.68rem;
 `;
 
@@ -265,6 +272,7 @@ const SongVolume = styled.div`
 
 const SongVolumeBar = styled.input`
   -webkit-appearance: none;
+  appearance: none;
   width: 100px;
   height: 4px;
   background-color: #4d4d4d;
@@ -292,7 +300,10 @@ function Player() {
   const [clicked, setClicked] = useState(false);
 
   const audio = useRef<null | HTMLAudioElement>(null);
-  const [currentSong, setCurrentSong] = useState(
+  const [
+    currentSong,
+    // , setCurrentSong
+  ] = useState(
     songs[3]
     // {title: "Title",
     // artist: "Artist",

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Player from "./components/Player";
+import Menu from "./components/Menu";
 
 function App() {
   const Wrapper = styled.div`
@@ -19,7 +20,9 @@ function App() {
 
   return (
     <Wrapper>
-      <Main>main</Main>
+      <Main>
+        <Menu />
+      </Main>
       <Player />
     </Wrapper>
   );
