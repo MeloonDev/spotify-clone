@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Player from "./components/Player";
 import Menu from "./components/Menu";
+import Content from "./components/Content";
 
 function App() {
   const Wrapper = styled.div`
@@ -22,6 +23,7 @@ function App() {
     <Wrapper>
       <Main>
         <Menu />
+        <Content />
       </Main>
       <Player />
     </Wrapper>
