@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import Footer from "./Footer";
+import Home from "./Home";
 
 const ContentWrapper = styled.div`
+  overflow-y: auto;
   flex: 1;
   padding: 1rem 1.5rem;
   background: #121212;
@@ -16,6 +18,7 @@ const ContentWrapper = styled.div`
 function Content() {
   return (
     <ContentWrapper>
+      <Home />
       <Footer />
     </ContentWrapper>
   );

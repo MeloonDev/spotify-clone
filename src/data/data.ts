@@ -43,3 +43,14 @@ export type Song = {
   path: string;
   cover: string;
 };
+
+export const categories = [
+  "Recently played",
+  "Liked songs",
+  "Shows you might like",
+  "Fresh new music",
+  "Your top mixes",
+  "Mood",
+  "Popular artists",
+  "Recommended for today",
+];

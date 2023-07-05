@@ -14,6 +14,7 @@ function App() {
   `;
 
   const Main = styled.main`
+    overflow-y: hidden;
     flex: 1;
     display: flex;
     gap: 0.5rem;

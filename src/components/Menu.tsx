@@ -12,7 +12,6 @@ import { HiTag } from "react-icons/hi";
 
 const MenuWrapper = styled.div`
   width: 22rem;
-  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
