@@ -9,6 +9,7 @@ import {
 import { GoHome, GoHomeFill, GoPlus, GoArrowRight } from "react-icons/go";
 import { BsHeartFill } from "react-icons/bs";
 import { HiTag } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 const MenuWrapper = styled.div`
   width: 22rem;
@@ -32,7 +33,43 @@ const Section = styled.section`
   }
 `;
 
-const NavButton = styled.button`
+const NavButton = styled.div`
+  width: 100%;
+  background: transparent;
+  cursor: pointer;
+
+  &.home {
+    margin-bottom: 0.8rem;
+  }
+
+  & a {
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.9rem;
+    transition: color 0.2s ease-in-out;
+    color: #a7a7a7;
+  }
+
+  &.active a {
+    color: #fff;
+  }
+
+  &:hover a {
+    color: #fff;
+  }
+
+  & a svg {
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+`;
+
+const LibraryButton = styled.button`
   width: 100%;
   background: transparent;
   border: none;
@@ -47,14 +84,6 @@ const NavButton = styled.button`
   transition: color 0.2s ease-in-out;
   cursor: pointer;
   color: #a7a7a7;
-
-  &.home {
-    margin-bottom: 0.8rem;
-  }
-
-  &.active {
-    color: #fff;
-  }
 
   &:hover {
     color: #fff;
@@ -179,14 +208,18 @@ function Menu() {
     <MenuWrapper>
       <Section>
         <NavButton className={`home ${active === "home" ? "active" : ""}`}>
-          {active === "home" ? <GoHomeFill /> : <GoHome />}Home
+          <Link to="/">
+            {active === "home" ? <GoHomeFill /> : <GoHome />}Home
+          </Link>
         </NavButton>
         <NavButton className={`${active === "search" ? "active" : ""}`}>
-          {active === "search" ? <BiSolidSearch /> : <BiSearch />}Search
+          <Link to="/search">
+            {active === "search" ? <BiSolidSearch /> : <BiSearch />}Search
+          </Link>{" "}
         </NavButton>
       </Section>
       <Section className="library">
-        <NavButton>
+        <LibraryButton>
           <BiLibrary />
           <span>Your Library</span>
           <Icon>
@@ -195,7 +228,7 @@ function Menu() {
           <Icon>
             <GoArrowRight />
           </Icon>
-        </NavButton>
+        </LibraryButton>
         <Tags>
           <Tag>Playlists</Tag>
           <Tag>Artists</Tag>

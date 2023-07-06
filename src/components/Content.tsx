@@ -1,6 +1,8 @@
 import styled from "styled-components";
+import { Routes, Route } from "react-router-dom";
 import Footer from "./Footer";
 import Home from "./Home";
+import Search from "./Search";
 
 const ContentWrapper = styled.div`
   overflow-y: auto;
@@ -18,7 +20,10 @@ const ContentWrapper = styled.div`
 function Content() {
   return (
     <ContentWrapper>
-      <Home />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/search" element={<Search />} />
+      </Routes>
       <Footer />
     </ContentWrapper>
   );
