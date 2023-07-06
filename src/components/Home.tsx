@@ -3,6 +3,7 @@ import { categories } from "../data/data";
 import Category from "./Category";
 
 const Categories = styled.div`
+  margin-top: 0.5rem;
   width: 100%;
   display: flex;
   flex-direction: column;

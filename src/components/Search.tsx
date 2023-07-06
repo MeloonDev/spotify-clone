@@ -4,6 +4,7 @@ import { PlaylistType } from "../types/types";
 import { BiSearch } from "react-icons/bi";
 
 const SearchWrapper = styled.div`
+  margin-top: 0.5rem;
   width: 100%;
   display: flex;
   flex-direction: column;

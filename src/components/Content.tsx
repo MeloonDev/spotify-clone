@@ -3,11 +3,12 @@ import { Routes, Route } from "react-router-dom";
 import Footer from "./Footer";
 import Home from "./Home";
 import Search from "./Search";
+import Controls from "./Controls";
 
 const ContentWrapper = styled.div`
   overflow-y: auto;
   flex: 1;
-  padding: 1rem 1.5rem;
+  padding: 0rem 1.5rem 1rem 1.5rem;
   background: #121212;
   border-radius: 0.5rem;
   display: flex;
@@ -20,6 +21,7 @@ const ContentWrapper = styled.div`
 function Content() {
   return (
     <ContentWrapper>
+      <Controls />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<Search />} />

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 import {
   BiSearch,
@@ -10,6 +9,9 @@ import { GoHome, GoHomeFill, GoPlus, GoArrowRight } from "react-icons/go";
 import { BsHeartFill } from "react-icons/bs";
 import { HiTag } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import type { RootState } from "../store/store";
+import { useSelector, useDispatch } from "react-redux";
+import { setActivePage } from "../store/activePageSlice";
 
 const MenuWrapper = styled.div`
   width: 22rem;
@@ -199,23 +201,27 @@ const PlaylistDescription = styled.p`
 `;
 
 function Menu() {
-  const [
-    active,
-    // setActive
-  ] = useState<string>("home");
+  const active = useSelector((state: RootState) => state.activePage.value);
+  const dispatch = useDispatch();
 
   return (
     <MenuWrapper>
       <Section>
-        <NavButton className={`home ${active === "home" ? "active" : ""}`}>
+        <NavButton
+          className={`home ${active === "home" ? "active" : ""}`}
+          onClick={() => dispatch(setActivePage("home"))}
+        >
           <Link to="/">
             {active === "home" ? <GoHomeFill /> : <GoHome />}Home
           </Link>
         </NavButton>
-        <NavButton className={`${active === "search" ? "active" : ""}`}>
+        <NavButton
+          className={`${active === "search" ? "active" : ""}`}
+          onClick={() => dispatch(setActivePage("search"))}
+        >
           <Link to="/search">
             {active === "search" ? <BiSolidSearch /> : <BiSearch />}Search
-          </Link>{" "}
+          </Link>
         </NavButton>
       </Section>
       <Section className="library">
