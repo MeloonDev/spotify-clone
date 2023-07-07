@@ -1,35 +1,41 @@
 export const songs = [
   {
+    index: 0,
     title: "song 0",
     artist: "artist 0",
     path: "/songs/song0.mp3",
     cover: "/images/cover0.jpg",
   },
   {
+    index: 1,
     title: "song 1",
     artist: "artist 1",
     path: "/songs/song1.mp3",
     cover: "/images/cover1.jpg",
   },
   {
+    index: 2,
     title: "song 2",
     artist: "artist 2",
     path: "/songs/song2.mp3",
     cover: "/images/cover2.jpg",
   },
   {
+    index: 3,
     title: "song 3",
     artist: "artist 3",
     path: "/songs/song3.mp3",
     cover: "/images/cover3.jpg",
   },
   {
+    index: 4,
     title: "song 4",
     artist: "artist 4",
     path: "/songs/song4.mp3",
     cover: "/images/cover4.jpg",
   },
   {
+    index: 5,
     title: "song 5",
     artist: "artist 5",
     path: "/songs/song5.mp3",

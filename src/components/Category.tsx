@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { songs } from "../data/data";
-import {
-  BsFillPlayFill,
-  // BsPauseFill
-} from "react-icons/bs";
+import { BsFillPlayFill, BsPauseFill } from "react-icons/bs";
+import type { RootState } from "../store/store";
+import { useSelector, useDispatch } from "react-redux";
+import { setIsPlaying } from "../store/isPlayingSlice";
+import { setCurrentSong } from "../store/currenSongSlice";
 
 const CategoryTitle = styled.h2`
   width: 100%;
@@ -66,6 +67,11 @@ const PlayButton = styled.button`
   transform: translateY(10%);
   transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
 
+  &.playing {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   ${Song}:hover & {
     opacity: 1;
     transform: translateY(0);
@@ -102,6 +108,12 @@ type CategoryProps = {
 };
 
 function Category({ category }: CategoryProps) {
+  const isPlaying = useSelector((state: RootState) => state.isPlaying.value);
+  const currentSongIndex = useSelector(
+    (state: RootState) => state.currenSong.value
+  );
+  const dispatch = useDispatch();
+
   return (
     <>
       <CategoryTitle>{category}</CategoryTitle>
@@ -109,8 +121,20 @@ function Category({ category }: CategoryProps) {
         {songs.map((song) => (
           <Song key={song.title}>
             <SongImage style={{ backgroundImage: `url(${song.cover})` }}>
-              <PlayButton>
-                <BsFillPlayFill />
+              <PlayButton
+                className={
+                  isPlaying && song.index === currentSongIndex ? "playing" : ""
+                }
+                onClick={() => {
+                  dispatch(setCurrentSong(song.index));
+                  dispatch(setIsPlaying(!isPlaying));
+                }}
+              >
+                {isPlaying && song.index === currentSongIndex ? (
+                  <BsPauseFill />
+                ) : (
+                  <BsFillPlayFill />
+                )}
               </PlayButton>
             </SongImage>
             <SongTitle>{song.title}</SongTitle>

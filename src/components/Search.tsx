@@ -2,6 +2,9 @@ import styled from "styled-components";
 import { playlists } from "../data/data";
 import { PlaylistType } from "../types/types";
 import { BiSearch } from "react-icons/bi";
+import { useDispatch } from "react-redux";
+import { setActivePage } from "../store/activePageSlice";
+import { useEffect } from "react";
 
 const SearchWrapper = styled.div`
   margin-top: 0.5rem;
@@ -97,6 +100,12 @@ const PlaylistImage = styled.div`
 `;
 
 function Search() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setActivePage("search"));
+  }, []);
+
   return (
     <SearchWrapper>
       <h2>Search</h2>

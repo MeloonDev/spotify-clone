@@ -19,6 +19,9 @@ import {
 } from "react-icons/pi";
 import { BiVolumeFull, BiVolumeMute } from "react-icons/bi";
 import { songs } from "../data/data";
+import type { RootState } from "../store/store";
+import { useSelector, useDispatch } from "react-redux";
+import { setIsPlaying } from "../store/isPlayingSlice";
 
 const PlayerWrapper = styled.div`
   position: relative;
@@ -43,7 +46,6 @@ const AlbumCover = styled.div`
   width: 55px;
   height: 55px;
   border-radius: 4px;
-  background-color: #b2b2b2;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -300,17 +302,11 @@ function Player() {
   const [clicked, setClicked] = useState(false);
 
   const audio = useRef<null | HTMLAudioElement>(null);
-  const [
-    currentSong,
-    // , setCurrentSong
-  ] = useState(
-    songs[3]
-    // {title: "Title",
-    // artist: "Artist",
-    // path: "",
-    // cover: "",}
-  );
-  const [isPlaying, setIsPlaying] = useState(false);
+  const currentSong = useSelector((state: RootState) => state.currenSong.value);
+
+  const isPlaying = useSelector((state: RootState) => state.isPlaying.value);
+  const dispatch = useDispatch();
+
   const [mute, setMute] = useState(false);
   const [volume, setVolume] = useState(0.5);
 
@@ -344,6 +340,13 @@ function Player() {
   }, [mute, volume]);
 
   useEffect(() => {
+    if (!audio.current) return;
+    if (isPlaying) {
+      audio.current.play();
+    } else {
+      audio.current.pause();
+    }
+
     if (isPlaying) {
       setInterval(() => {
         const duration = audio.current?.duration;
@@ -354,53 +357,66 @@ function Player() {
         setElapsedTime(elapsed);
 
         if (elapsed === duration) {
-          setIsPlaying(false);
+          dispatch(setIsPlaying(false));
         }
       }, 100);
     }
   }, [isPlaying]);
 
-  const togglePlay = () => {
+  useEffect(() => {
     if (!audio.current) return;
-    if (isPlaying) {
-      audio.current.pause();
-    } else {
-      audio.current.play();
-    }
-    setIsPlaying(!isPlaying);
+    audio.current.play();
+    dispatch(setIsPlaying(true));
+  }, [currentSong]);
+
+  const togglePlay = () => {
+    dispatch(setIsPlaying(!isPlaying));
   };
 
   return (
     <PlayerWrapper>
-      <audio ref={audio} src={currentSong.path} />
+      {currentSong != null && (
+        <audio ref={audio} src={songs[currentSong].path} />
+      )}
       <SongInfo>
         <AlbumCover
           className={clicked ? "clicked" : ""}
           style={{
-            backgroundImage: `url(${currentSong.cover})`,
+            backgroundImage:
+              currentSong != null ? `url(${songs[currentSong].cover})` : "none",
           }}
         >
-          <AlbumCoverButton
-            onClick={() => {
-              setClicked(!clicked);
-            }}
-            style={{
-              transform: clicked ? "rotate(180deg)" : "rotate(0deg)",
-            }}
-          >
-            <SlArrowUp />
-          </AlbumCoverButton>
+          {currentSong != null && (
+            <AlbumCoverButton
+              onClick={() => {
+                setClicked(!clicked);
+              }}
+              style={{
+                transform: clicked ? "rotate(180deg)" : "rotate(0deg)",
+              }}
+            >
+              <SlArrowUp />
+            </AlbumCoverButton>
+          )}
         </AlbumCover>
         <SongDetails>
-          <SongTitle>{currentSong.title}</SongTitle>
-          <SongArtist>{currentSong.artist}</SongArtist>
+          <SongTitle>
+            {currentSong != null && songs[currentSong].title}
+          </SongTitle>
+          <SongArtist>
+            {currentSong != null && songs[currentSong].artist}
+          </SongArtist>
         </SongDetails>
-        <SongButton>
-          <BsHeart />
-        </SongButton>
-        <SongButton>
-          <MdPictureInPictureAlt />
-        </SongButton>
+        {currentSong != null && (
+          <SongButton>
+            <BsHeart />
+          </SongButton>
+        )}
+        {currentSong != null && (
+          <SongButton>
+            <MdPictureInPictureAlt />
+          </SongButton>
+        )}
       </SongInfo>
       <SongPlayer>
         <SongControls>
