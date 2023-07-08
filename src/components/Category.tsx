@@ -15,16 +15,22 @@ const CategoryTitle = styled.h2`
 `;
 
 const CategorySongs = styled.div`
+  overflow-x: scroll;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 1.6rem;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Song = styled.div`
   flex: 1;
   padding: 0.8rem;
+  min-width: 10rem;
   background: #181818;
   border-radius: 0.5rem;
   display: flex;
@@ -43,10 +49,15 @@ const Song = styled.div`
 const SongImage = styled.div`
   position: relative;
   width: 100%;
-  height: 10rem;
-  background-size: cover;
-  background-position: center;
+  height: auto;
   border-radius: 5px;
+  overflow: hidden;
+
+  & img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const PlayButton = styled.button`
@@ -90,7 +101,7 @@ const PlayButton = styled.button`
 const SongTitle = styled.h3`
   width: 100%;
   color: #fff;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 700;
   text-align: left;
 `;
@@ -120,7 +131,8 @@ function Category({ category }: CategoryProps) {
       <CategorySongs>
         {songs.map((song) => (
           <Song key={song.title}>
-            <SongImage style={{ backgroundImage: `url(${song.cover})` }}>
+            <SongImage>
+              <img src={song.cover} alt="Song cover image" />
               <PlayButton
                 className={
                   isPlaying && song.index === currentSongIndex ? "playing" : ""

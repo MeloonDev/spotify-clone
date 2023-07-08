@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const FooterWrapper = styled.footer`
+  margin-top: 3rem;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -37,6 +38,13 @@ const BottomLinks = styled.div`
   & p {
     flex: 1;
     text-align: right;
+  }
+
+  @media (max-width: 1000px) {
+    margin-bottom: 5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
 `;
 

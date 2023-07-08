@@ -32,6 +32,17 @@ const PlayerWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
+
+  @media (max-width: 1000px) {
+    position: fixed;
+    bottom: 4rem;
+    left: 0;
+    margin: 0 0.3rem;
+    width: calc(100% - 0.6rem);
+    background-color: #181818;
+    border-radius: 5px;
+    justify-content: flex-start;
+  }
 `;
 
 const SongInfo = styled.div`
@@ -39,6 +50,10 @@ const SongInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+
+  @media (max-width: 1000px) {
+    /* flex: 0; */
+  }
 `;
 
 const AlbumCover = styled.div`
@@ -89,6 +104,10 @@ const AlbumCoverButton = styled.button`
     height: 1rem;
     color: #fff;
   }
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 const SongDetails = styled.div`
@@ -138,6 +157,10 @@ const SongButton = styled.button`
   &:hover svg {
     color: #fff;
   }
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 const SongPlayer = styled.div`
@@ -147,6 +170,10 @@ const SongPlayer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 1000px) {
+    width: 15%;
+  }
 `;
 
 const SongControls = styled.div`
@@ -171,6 +198,10 @@ const Button = styled.button`
 
   &:hover svg {
     color: #fff;
+  }
+
+  @media (max-width: 1000px) {
+    display: none;
   }
 `;
 
@@ -198,6 +229,11 @@ const PlayButton = styled.button`
     width: 1.6rem;
     height: 1.6rem;
   }
+
+  @media (max-width: 1000px) {
+    background: transparent;
+    color: #fff;
+  }
 `;
 
 const Timeline = styled.div`
@@ -207,11 +243,22 @@ const Timeline = styled.div`
   justify-content: center;
   gap: 0.5rem;
   color: #b2b2b2;
+
+  @media (max-width: 1000px) {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
 `;
 
 const SongCurrentTime = styled.p`
   width: 2rem;
   font-size: 0.68rem;
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 const ProgressBar = styled.input`
@@ -243,6 +290,10 @@ const ProgressBar = styled.input`
 const SongDuration = styled.p`
   width: 2rem;
   font-size: 0.68rem;
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 const SongTools = styled.div`
@@ -250,6 +301,10 @@ const SongTools = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 const SongVolume = styled.div`

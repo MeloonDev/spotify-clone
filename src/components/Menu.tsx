@@ -18,6 +18,20 @@ const MenuWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+
+  @media (max-width: 1200px) {
+    width: 18rem;
+  }
+
+  @media (max-width: 1000px) {
+    position: fixed;
+    //fix it later
+    z-index: 100;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4rem;
+  }
 `;
 
 const Section = styled.section`
@@ -32,6 +46,20 @@ const Section = styled.section`
 
   &.library {
     flex: 1;
+  }
+
+  @media (max-width: 1000px) {
+    padding: 0.5rem 1rem;
+    height: 100%;
+    background: linear-gradient(to top, #000 80%, transparent);
+    border-radius: 0;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+
+    &.library {
+      display: none;
+    }
   }
 `;
 
@@ -68,6 +96,21 @@ const NavButton = styled.div`
   & a svg {
     width: 1.7rem;
     height: 1.7rem;
+  }
+
+  @media (max-width: 1000px) {
+    width: 5rem;
+    height: 100%;
+
+    &.home {
+      margin-bottom: 0;
+    }
+
+    & a {
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.2rem;
+    }
   }
 `;
 
@@ -257,26 +300,26 @@ function Menu() {
           <Playlist>
             <PlaylistImage
               style={{
-                background: `linear-gradient(-45deg,#b4d6db, #4910f3 )`,
+                background: `linear-gradient(-45deg,#cbdbb4, #f39110 )`,
               }}
             >
               <HiTag />
             </PlaylistImage>
             <PlaylistInfo>
-              <PlaylistName>Playlist Name</PlaylistName>
+              <PlaylistName>Podcasts</PlaylistName>
               <PlaylistDescription>Playlist</PlaylistDescription>
             </PlaylistInfo>
           </Playlist>
           <Playlist>
             <PlaylistImage
               style={{
-                background: `linear-gradient(-45deg,#b4d6db, #4910f3 )`,
+                background: `linear-gradient(-45deg,#cd90dd, #f3106b )`,
               }}
             >
               <BiSolidTrophy />
             </PlaylistImage>
             <PlaylistInfo>
-              <PlaylistName>Playlist Name</PlaylistName>
+              <PlaylistName>Top 50 world</PlaylistName>
               <PlaylistDescription>Playlist</PlaylistDescription>
             </PlaylistInfo>
           </Playlist>

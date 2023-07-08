@@ -60,6 +60,14 @@ const SearchInput = styled.div`
     color: #fff;
     font-weight: 500;
   }
+
+  @media (max-width: 1400px) {
+    width: 50%;
+  }
+
+  @media (max-width: 1000px) {
+    width: 100%;
+  }
 `;
 
 const Playlists = styled.div`
